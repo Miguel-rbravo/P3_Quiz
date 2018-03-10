@@ -83,7 +83,7 @@ const makeQuestion =  (rl, text) => {
 exports.addCmd = rl =>{
     makeQuestion(rl, 'Introduzca una pregunta: ')
         .then( q => {
-            return makeQuestion(rl, 'Introduzca una pregunta: ')
+            return makeQuestion(rl, 'Introduzca una respuesta: ')
                 .then(a => {
                     return {question: q, answer: a};
                 });
@@ -238,7 +238,7 @@ exports.playCmd = rl =>{
             .then(()=> {
 
                 if(toBePlayed.length<= 0){
-                    console.log("FIN");
+                    console.log("Fin");
                     return;
                 }
 
@@ -249,10 +249,10 @@ exports.playCmd = rl =>{
                     .then(answer => {
                         if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
                             score++;
-                            log("Correcto");
+                            console.log("Correcto");
                             return playOne();
                         }else{
-                            log("incorrecto");
+                            console.log("incorrecto");
                         }
                     })
             })
@@ -268,7 +268,7 @@ exports.playCmd = rl =>{
             console.log("Error" + e);
         })
         .then(()=> {
-            console.log(score);
+            log("Su Puntuación es: "+score,"magenta");
             rl.prompt();
         })
 };
