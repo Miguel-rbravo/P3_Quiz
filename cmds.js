@@ -199,10 +199,10 @@ exports.testCmd = (rl, id) =>{
                 return makeQuestion(rl,quiz.question)
                     .then(answer => {
                         if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
-                            console.log("Correcto");
+                            log("Correcto");
                             rl.prompt();
                         }else{
-                            console.log("incorrecto");
+                            log("incorrecto");
                             rl.prompt();
                         }
                     })
@@ -238,7 +238,7 @@ exports.playCmd = rl =>{
             .then(()=> {
 
                 if(toBePlayed.length<= 0){
-                    console.log("SE ACABO");
+                    console.log("FIN");
                     return;
                 }
 
@@ -249,10 +249,10 @@ exports.playCmd = rl =>{
                     .then(answer => {
                         if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
                             score++;
-                            console.log("Correcto");
+                            log("Correcto");
                             return playOne();
                         }else{
-                            console.log("incorrecto");
+                            log("incorrecto");
                         }
                     })
             })
