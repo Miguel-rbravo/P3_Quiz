@@ -151,38 +151,6 @@ exports.editCmd = (rl, id) =>{
 };
 
 exports.testCmd = (rl, id) =>{
-    /*if(typeof id === "undefined"){
-        errorlog(`Falta el parámetro id.`);
-        rl.prompt();
-    }
-    else{
-        try{
-            //const quiz = exports.showCmd(rl,id);
-            const quiz = (model.getByIndex(id)).question + "?: ";
-
-            //rl.question(colorize( quiz , 'red'), answer =>{
-            //		rl.prompt();
-            //});
-            rl.question(colorize(quiz, 'red'),respuesta=>{
-                if(respuesta.trim().toLowerCase() === model.getByIndex(id).answer.toLowerCase()){
-                    log(`Su respuesta es correcta: `);
-                    biglog('Correcta', 'green');
-                    rl.prompt();
-                }
-                else{
-                    log(`Su respuesta es incorrecta `);
-                    biglog('Incorrecta', 'red');
-                    rl.prompt();
-                }
-            });
-
-
-        }catch(error){
-            errorlog(error.message);
-            rl.prompt();
-        }
-    }*/
-
     let toBePlayed=[];
 
     models.quiz.findAll({raw:true})
@@ -199,10 +167,10 @@ exports.testCmd = (rl, id) =>{
                 return makeQuestion(rl,quiz.question)
                     .then(answer => {
                         if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
-                            log("Correcto");
+                            console.log("Correcto");
                             rl.prompt();
                         }else{
-                            log("incorrecto");
+                           console.log("incorrecto");
                             rl.prompt();
                         }
                     })
@@ -238,7 +206,7 @@ exports.playCmd = rl =>{
             .then(()=> {
 
                 if(toBePlayed.length<= 0){
-                    console.log("Fin");
+                console.log("No hay mas preguntas.\nFin del examen. Aciertos:"+score);
                     return;
                 }
 
@@ -249,10 +217,10 @@ exports.playCmd = rl =>{
                     .then(answer => {
                         if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
                             score++;
-                            console.log("Correcto");
+                            console.log('CORRECTO - Lleva ',score, 'aciertos');
                             return playOne();
                         }else{
-                            console.log("incorrecto");
+                            console.log("INCORRECTO.\nFin del examen. Aciertos:"+score);
                         }
                     })
             })
@@ -268,12 +236,40 @@ exports.playCmd = rl =>{
             console.log("Error" + e);
         })
         .then(()=> {
-            log("Su Puntuación es: "+score,"magenta");
+           // console.log("Fin, su Puntuación es: "+score);
             rl.prompt();
         })
 };
+/*exports.playCmd = (rl) => {
+    let score = 0;
+    let toBeResolved = [];
 
+    const playOne = () => {
+        return new Promise((resolve, reject) => {
 
+            if (toBeResolved.length <= 0) {
+                console.log("No hay nada mas que preguntar.\nFin del examen. Aciertos:");
+                resolve();
+                return;
+            }
+            let pos = Math.floor(Math.random() * toBeResolved.length);
+            let quiz = toBeResolved[pos];
+            toBeResolved.splice(pos, 1);
+
+            makeQuestion(rl, quiz.question)
+                .then(answer => {
+                    if (answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim()) {
+                        score++;
+                        console.log("CORRECTO - Lleva ',score, 'aciertos");
+                        resolve(playOne());
+                    } else {
+                        console.log("INCORRECTO.\nFin del examen. Aciertos:");
+                        resolve();
+                    }
+                })
+        })
+    }
+};*/
 exports.creditsCmd = rl =>{
     log('Miguel Rubio Bravo', 'green');
     rl.prompt();
